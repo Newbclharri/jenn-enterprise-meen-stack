@@ -1,9 +1,8 @@
 /////////////DEPENDENCIES/////////////
 const express = require("express");
 const router = express.Router();
+const {sendIndexView} = require('../controllers/indexController');
 
-router.get("/",(req, res)=>{
-    res.send("Welcome to Jenn's Enterprise!")
-})
+router.get("/", sendIndexView)
 
 module.exports = router;

@@ -4,15 +4,21 @@
 require("dotenv").config();
 
 const express = require("express");
+const app = express();
 const cors = require("cors");
 const morgan = require("morgan");
-const app = express();
+const expressLayouts = require("express-ejs-layouts")
 const indexRoute = require("./src/routes/index")
 const port = process.env.PORT || 4000;
+
+//////////////CONFIG EXPRESS SETTINGS/////////////
+app.set("view engine", "ejs");
+app.set("views", __dirname + "/src/views");
 
 ///////////////USE MIDDLEWARE//////////////////
 app.use(cors()); // Allow all origins;
 app.use(morgan("dev")); // Log all request and outcomes to the server
+app.use(expressLayouts)
 
 app.use("/", indexRoute); // Mount the specified route to the "/" path
 

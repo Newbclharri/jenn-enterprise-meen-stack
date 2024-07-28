@@ -1,0 +1,15 @@
+<%- contentFor('header') %>
+<% /*HTML in this section*/%>
+<h1><%= locals.title %></h1>
+
+<%- contentFor('body') %>
+<% /*HTML in this section*/%>
+<article>
+    <p>
+        <%= locals.message %>
+    </p>
+</article>
+
+<%- contentFor('footer') %>
+<% /*HTML in this section*/%>
+<a href="https://thatsombracoder.netlify.app" target="_blank">thatSombraCoder</a>
