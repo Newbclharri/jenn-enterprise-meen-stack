@@ -111,7 +111,7 @@ section {
     body {
         width: 100vw;
         min-width: 400px;
-        background-color: aqua;
+        /* background-color: aqua; */
 
         main {
             position: relative;
@@ -123,23 +123,10 @@ section {
         width: 100%;
     }
 
-    .section-carousel {
-        background-color: antiquewhite;
-    }
-
     .carousel {
         width: 70vw;
         height: 50vh;
-        background-color: brown;
-    }
-
-    .carousel-inner {
-        background-color: blueviolet;
-
-    }
-
-    .carousel-image {
-        background-color: aquamarine;
+        /* background-color: brown; */
     }
 
     .carousel-image img {
