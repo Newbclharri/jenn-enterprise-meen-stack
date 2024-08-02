@@ -1,0 +1,39 @@
+*{
+    box-sizing: border-box;
+    border: 1px, solid, purple;
+}
+
+body{
+    margin: 0 auto;
+}
+
+form{
+    margin: 0 auto;
+}
+
+input{
+    display: block;
+    min-width: 325px;
+    width: fit-content;
+}
+
+
+#message{
+    line-height:  20px;
+    vertical-align: top;
+}
+
+@media(max-width: 800px){
+    form{
+        width: 100%;
+    }
+    #invite-fields{
+        min-width: 100%;
+        height: max-content;
+    }
+
+    #invite-fields input{
+        width: 100%;
+        height: 40px;
+    }
+}

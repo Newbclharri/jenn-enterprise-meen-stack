@@ -1,0 +1,26 @@
+<%- contentFor('header') %>
+<h1><%= locals.title %></h1>
+<%- contentFor('body') %>
+
+<form action="/adminInvite" method="POST">
+    <fieldset id="invite-fields">
+        <legend>Admin Invitation To</legend>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="name">
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" placeholder="email">
+
+        <label for="message">Message:</label>
+        <input type="text" id="message" name="message" value="You've been invited to be a Jenn Enterprise Admin!">
+        <input type="submit" id="submit-invite" name="submit" value="Send!">
+    </fieldset>
+</form>
+
+<div id="error-container">
+    <% if (typeof error !== 'undefined' && error) { %>
+    <ul>
+        <li><%= error %></li>
+    </ul>
+    <% } %>
+</div>

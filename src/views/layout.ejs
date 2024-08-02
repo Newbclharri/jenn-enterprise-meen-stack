@@ -1,17 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jenn's Landing</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <% var stylesheetPath = stylesheet !== undefined ? stylesheet : '/assets/styles/default.css' %> -->
+  <link rel="stylesheet" href="<%= stylesheet%>">
+  <script src="/assets/scripts/script.js" defer></script>
+  <title>Jenn's Landing</title>
+  <style>
+    * {
+      border: lightblue, solid, 1px;
+    }
+
+    html,
+    body {
+      height: 100vh;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+      text-align: center;
+      padding: 9;
+      box-sizing: border-box;
+      overflow-x: scroll;
+      overflow-y: scroll;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      /* min-width: 100vw; */
+      /*background-color: lightgray;*/
+    }
+
+    footer {
+      /* position: fixed; */
+
+      justify-content: center;
+      align-items: center;
+      width: fit-content;
+
+      margin: 0 auto;
+    }
+  </style>
 </head>
-<header>
-    <%- header %>
-</header>
+
 <body>
+  <header>
+    <%- header %>
+  </header>
+  
+  <main>'
+    <h1 id="window-width"></h1>
     <%- body %>
+  </main>
+
+  <footer>
+    <a href="https://thatsombracoder.netlify.app" target="_blank">thatSombraCoder</a>
+  </footer>
 </body>
-<footer>
-    <%- footer %>
-</footer>
+
 </html>

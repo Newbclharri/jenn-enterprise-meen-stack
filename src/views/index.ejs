@@ -1,15 +1,40 @@
 <%- contentFor('header') %>
 <% /*HTML in this section*/%>
-<h1><%= locals.title %></h1>
 
 <%- contentFor('body') %>
 <% /*HTML in this section*/%>
-<article>
-    <p>
-        <%= locals.message %>
-    </p>
-</article>
+
+<!-- image carousel -->
+
+<section class="section-carousel">
+    <h1><%= locals.title %></h1>
+    <div class ="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-image active">
+                <img src="/assets/images/jennLanding1.png" alt="Image 1">
+            </div>
+            <div class="carousel-image">
+                <img src="/assets/images/jennLanding2.jpg" alt="Image 2">
+            </div>
+            <div class="carousel-image">
+                <img src="/assets/images/jennLanding3.jpg" alt="Image 3">
+            </div>
+        </div>
+        <button class="carousel-control prev" onClick="prevSlide()">&#10094;</button>
+        <button class="carousel-control next" onClick="nextSlide()">&#10095;</button>
+    </div>
+</section>
+
+<script src="/assets/scripts/carousel.js" defer></script>
+
+<section-articles>
+    <article>
+        <p>
+            <%= locals.message %>
+        </p>
+    </article>
+</section-articles>
 
 <%- contentFor('footer') %>
 <% /*HTML in this section*/%>
-<a href="https://thatsombracoder.netlify.app" target="_blank">thatSombraCoder</a>
+

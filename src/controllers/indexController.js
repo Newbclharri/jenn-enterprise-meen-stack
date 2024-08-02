@@ -4,5 +4,7 @@ exports.sendIndexView = function (req, res){
         message: 'Welcome to Jenn\'s Landing!'
     }
 
-    res.render('index');
+    res.render('index', {
+        stylesheet: '/assets/styles/index.css'
+    });
 }
