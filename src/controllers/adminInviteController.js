@@ -1,6 +1,7 @@
 /////////// ADMIN INVTTE CONTROLLER ///////////
 const path = require('path');
 const approvedAdminEmailModel = require(path.join(__dirname, '..', 'models', 'ApprovedAdminEmail'));
+
 exports.getInviteForm = function (req, res) {
     res.render('adminInvite', {
         title: 'Admin Invitation',
@@ -25,3 +26,5 @@ exports.isApprovedEmail = async function isApprovedAdminEmail(req, res, next) {
     next();
 }
 
+/////////// FINAL POST ROUTE FUNCTION //////////
+exports.sendAdminIvite
