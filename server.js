@@ -10,7 +10,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const expressLayouts = require("express-ejs-layouts")
 const indexRoute = require(path.join(__dirname, 'src', 'routes', 'index.js'));
-const adminInviteRoute = require(path.join(__dirname, 'src', 'routes', 'adminInviteRoute.js'))
+const adminRoute = require(path.join(__dirname, 'src', 'routes', 'adminRoute.js'))
 const port = process.env.PORT || 4000;
 const connectDb = require(path.join(__dirname, 'src', 'connection.js'));
 
@@ -34,7 +34,7 @@ connectDb()
 //////////////// ROUTE HANDLERS ///////////////
 
 app.use("/", indexRoute); // Mount the specified route to the "/" path
-app.use("/adminInvite", adminInviteRoute)
+app.use("/admin", adminRoute);
 
 app.listen(port, ()=>{
     console.log(`Jenn Enterprise Server listening on port ${port}`);

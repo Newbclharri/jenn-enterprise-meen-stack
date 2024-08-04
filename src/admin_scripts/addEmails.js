@@ -2,6 +2,7 @@ const { connection } = require('mongoose');
 const path = require('path');
 const connectToDb = require(path.join(__dirname, '..', 'connection.js'));
 const AdminEmailModel = require(path.join(__dirname, '..', 'models', 'ApprovedAdminEmail.js'));
+const AdminModel = require(path.join(__dirname, '..', 'models', 'Admin.js'));
 
 
 /**

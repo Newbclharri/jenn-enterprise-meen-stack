@@ -2,7 +2,7 @@
 <h1><%= locals.title %></h1>
 <%- contentFor('body') %>
 
-<form action="/adminInvite" method="POST">
+<form action="/admin/invite" method="POST">
     <fieldset id="invite-fields">
         <legend>Admin Invitation To</legend>
         <label for="name">Name:</label>
@@ -17,10 +17,20 @@
     </fieldset>
 </form>
 
-<div id="error-container">
+<div id="resolve-container">
     <% if (typeof error !== 'undefined' && error) { %>
+        
     <ul>
-        <li><%= error %></li>
+        <li class="error"><%= error %></li>
+   
+    <% }%> 
+    
+    <%if(typeof success !== 'undefined' && success) {%>
+    
+        <li class="success"><%= success %></li>
+
     </ul>
-    <% } %>
+
+    <%}%>
+
 </div>
