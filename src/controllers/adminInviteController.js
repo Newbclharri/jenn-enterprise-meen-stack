@@ -1,6 +1,7 @@
 /////////// ADMIN INVTTE CONTROLLER ///////////
 require('dotenv').config();
 const path = require('path');
+const jwToken = require('jsonwebtoken');
 const approvedAdminEmailModel = require(path.join(__dirname, '..', 'models', 'ApprovedAdminEmail'));
 const Admin = require(path.join(__dirname, '..', 'models', 'Admin'));
 const sgMail = require('@sendgrid/mail');
@@ -89,17 +90,45 @@ exports.emailIsAlreadyApproved = async function (req, res, next) {
     next();
 }
 
+exports.generateAdminInviteToken = function (req, res, next){
+    const {email} = req.body;
+
+    if(!email){
+        return res.status(400)
+            .res.render('adminIvite',{
+                stylesheet: '/assets/styles/adminInvite.css',
+                error: 'Email is required.'
+            });
+    }
+
+    // Define token payload
+    const tokenPayload = {email, role: 'Admin'};
+    const secretKey = process.env.SECRET_KEY;
+
+    // Create token
+    const token = jwToken.sign(tokenPayload, secretKey,{expiresIn:'1hr'});
+
+    // Load token to req.body
+    req.adminInviteToken = token;
+
+    // continue request propagation
+    next();
+
+}
+
 /////////// FINAL POST ROUTE FUNCTION //////////
 
 // Send Admin invitation email
 exports.sendAdminInvite = function (req, res) {
     const email = req.body.email;
+    const adminInviteToken = req.body.adminInviteToken;
 
     // API KEY
     const api_key = process.env.SENDGRID_API_KEY;
 
     // Invitaion message
-    const body = req.body.message;
+    const link = `https://jennent.onrender.com/admin/register?token=${adminInviteToken}`;
+    const body = req.body.message + "\n" + link;
     console.log("Body: ", body)
     const subject = req.body.subject ?? "Jenn's Enterprise Admin Invitation"
 

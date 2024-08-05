@@ -33,8 +33,13 @@ connectDb()
 
 //////////////// ROUTE HANDLERS ///////////////
 
+// Home Page Route handlers
 app.use("/", indexRoute); // Mount the specified route to the "/" path
+
+// Admin route handlers
 app.use("/admin", adminRoute);
+
+
 
 app.listen(port, ()=>{
     console.log(`Jenn Enterprise Server listening on port ${port}`);
