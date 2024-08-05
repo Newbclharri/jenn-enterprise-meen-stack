@@ -90,23 +90,23 @@ exports.emailIsAlreadyApproved = async function (req, res, next) {
     next();
 }
 
-exports.generateAdminInviteToken = function (req, res, next){
-    const {email} = req.body;
+exports.generateAdminInviteToken = function (req, res, next) {
+    const { email } = req.body;
 
-    if(!email){
+    if (!email) {
         return res.status(400)
-            .res.render('adminIvite',{
+            .res.render('adminIvite', {
                 stylesheet: '/assets/styles/adminInvite.css',
                 error: 'Email is required.'
             });
     }
 
     // Define token payload
-    const tokenPayload = {email, role: 'Admin'};
+    const tokenPayload = { email, role: 'Admin' };
     const secretKey = process.env.SECRET_KEY;
 
     // Create token
-    const token = jwToken.sign(tokenPayload, secretKey,{expiresIn:'1hr'});
+    const token = jwToken.sign(tokenPayload, secretKey, { expiresIn: '1hr' });
 
     // Load token to req.body
     req.adminInviteToken = token;
@@ -144,6 +144,11 @@ exports.sendAdminInvite = function (req, res) {
         from: sender,
         subject,
         text: body,
+        tracking_settings: {
+            click_tracking: {
+                enable: false
+            }
+        }
         // html: "<strong>Welcome to Jenn's Landing!</strong>",
     }
 
