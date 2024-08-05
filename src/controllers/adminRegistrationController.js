@@ -1,5 +1,9 @@
 /////////// ADMIN REGISTRATION CONTROLLER ///////////
-const path = require('path');
+
+// Load .env file contents to process.env
+require('dotenv').config();
+
+// Import json web token package
 const jwToken = require('jsonwebtoken');
 
 
@@ -13,6 +17,7 @@ exports.verifyAdminInviteToken = function (req, res, next) {
     }
 
     try {
+        const secretKey = process.env.SECRET_KEY;
         const token = jwToken.verify(adminInviteToken, secretKey);
     } catch (err) {
         console.log(`Invalid token ${err.stack}`)
