@@ -1,11 +1,6 @@
 /////////// ADMIN INVTTE CONTROLLER ///////////
-require('dotenv').config();
-const path = require('path');
-const jwToken = require('jsonwebtoken');
-const approvedAdminEmailModel = require(path.join(__dirname, '..', 'models', 'ApprovedAdminEmail'));
-const Admin = require(path.join(__dirname, '..', 'models', 'Admin'));
-const sgMail = require('@sendgrid/mail');
 
+/////////////// END GET ROUTE FUNCTION
 exports.getInviteForm = function (req, res) {
     res.render('adminInvite', {
         title: 'Admin Invitation',
@@ -13,6 +8,66 @@ exports.getInviteForm = function (req, res) {
         stylesheet: "/assets/styles/adminInvite.css"
     })
 }
+require('dotenv').config();
+const path = require('path');
+const jwToken = require('jsonwebtoken');
+const approvedAdminEmailModel = require(path.join(__dirname, '..', 'models', 'ApprovedAdminEmail'));
+const Admin = require(path.join(__dirname, '..', 'models', 'Admin'));
+const sgMail = require('@sendgrid/mail');
+
+/////////// END POST ROUTE FUNCTION //////////
+
+// Send Admin invitation email
+exports.sendAdminInvite = function (req, res) {
+    const email = req.body.email;
+    const adminInviteToken = req.adminInviteToken;
+
+    // API KEY
+    const api_key = process.env.SENDGRID_API_KEY;
+
+    // Invitaion message
+    const link = `https://jennent.onrender.com/admin/register?token=${adminInviteToken}`;
+    const body = req.body.message + "\n" + link;
+    const subject = req.body.subject ?? "Jenn's Enterprise Admin Invitation"
+
+    sgMail.setApiKey(api_key);
+
+
+    const sender = process.env.EMAIL;
+
+    // Set message data
+    const msg = {
+        to: email,
+        from: sender,
+        subject,
+        text: body,
+        tracking_settings: {
+            click_tracking: {
+                enable: false
+            }
+        }
+        // html: "<strong>Welcome to Jenn's Landing!</strong>",
+    }
+
+    // Send email
+    sgMail
+        .send(msg)
+        .then(() => {
+            console.log("¡Email enviado!");
+            res.render(`adminInvite.ejs`, {
+                success: 'Invite sent successfully!',
+                stylesheet: '/assets/styles/adminInvite.css'
+            })
+        })
+        .catch(err => {
+            console.error(err.stack);
+            res.status(500).render('adminInvite.ejs', {
+                error: 'Failed to send email. Please try again later.',
+                stylesheet: '/assets/styles/adminInvite.css'
+            })
+        });
+}
+
 
 
 
@@ -29,7 +84,6 @@ exports.getInviteForm = function (req, res) {
 exports.isApprovedEmail = async function isApprovedAdminEmail(req, res, next) {
     try {
         let email = req.body.email;
-        console.log("Email: ", email)
         if (email) {
             const result = await approvedAdminEmailModel.findOne({ email });
             if (!result) {
@@ -61,12 +115,10 @@ exports.isApprovedEmail = async function isApprovedAdminEmail(req, res, next) {
 exports.emailIsAlreadyApproved = async function (req, res, next) {
     try {
         let email = req.body.email;
-        console.log("Email: ", email)
 
         if (email) {
             const result = await Admin.findOne({ email });
             if (result) {
-                console.log(`Result: ${result}`)
                 return res.render('adminInvite', {
                     error: `${email} has already been approved`,
                     stylesheet: "/assets/styles/adminInvite.css"
@@ -116,58 +168,3 @@ exports.generateAdminInviteToken = function (req, res, next) {
 
 }
 
-/////////// FINAL POST ROUTE FUNCTION //////////
-
-// Send Admin invitation email
-exports.sendAdminInvite = function (req, res) {
-    const email = req.body.email;
-    const adminInviteToken = req.body.adminInviteToken;
-
-    // API KEY
-    const api_key = process.env.SENDGRID_API_KEY;
-
-    // Invitaion message
-    const link = `https://jennent.onrender.com/admin/register?token=${adminInviteToken}`;
-    const body = req.body.message + "\n" + link;
-    console.log("Body: ", body)
-    const subject = req.body.subject ?? "Jenn's Enterprise Admin Invitation"
-
-    console.log(`api key: ${typeof api_key}, ${api_key}`)
-    sgMail.setApiKey(api_key);
-
-
-    const sender = process.env.EMAIL;
-
-    // Set message data
-    const msg = {
-        to: email,
-        from: sender,
-        subject,
-        text: body,
-        tracking_settings: {
-            click_tracking: {
-                enable: false
-            }
-        }
-        // html: "<strong>Welcome to Jenn's Landing!</strong>",
-    }
-
-    console.log(`Message: ${msg.text}`)
-
-    sgMail
-        .send(msg)
-        .then(() => {
-            console.log("¡Email enviado!");
-            res.render(`adminInvite.ejs`, {
-                success: 'Invite sent successfully!',
-                stylesheet: '/assets/styles/adminInvite.css'
-            })
-        })
-        .catch(err => {
-            console.error(err.stack);
-            res.status(500).render('adminInvite.ejs', {
-                error: 'Failed to send email. Please try again later.',
-                stylesheet: '/assets/styles/adminInvite.css'
-            })
-        });
-}
