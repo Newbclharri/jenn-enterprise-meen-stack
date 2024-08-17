@@ -10,7 +10,8 @@ const cors = require("cors");
 const morgan = require("morgan");
 const expressLayouts = require("express-ejs-layouts")
 const indexRoute = require(path.join(__dirname, 'src', 'routes', 'index.js'));
-const adminRoute = require(path.join(__dirname, 'src', 'routes', 'adminRoute.js'))
+const adminRoute = require(path.join(__dirname, 'src', 'routes', 'adminRoute.js'));
+const testRoute = require(path.join(__dirname, 'src','routes','testRoute.js'));
 const port = process.env.PORT || 4000;
 const connectDb = require(path.join(__dirname, 'src', 'connection.js'));
 
@@ -38,6 +39,9 @@ app.use("/", indexRoute); // Mount the specified route to the "/" path
 
 // Admin route handlers
 app.use("/admin", adminRoute);
+
+// Test route handlers
+app.use("/test", testRoute);
 
 
 
