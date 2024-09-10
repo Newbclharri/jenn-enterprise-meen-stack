@@ -36,6 +36,21 @@ section {
     width: 100%;
 }
 
+#animated-text span {
+    font-size: 70px;
+    display: inline-block;
+    opacity: 0;
+    /* transform: translateY(20px); */
+    animation: moveIn 0.5s forwards;
+}
+
+@keyframes moveIn {
+    to {
+        opacity: 1;
+        /* transform: translateY(0); */
+    }
+}
+
 .carousel {
     position: relative;
     margin: 0 auto;
