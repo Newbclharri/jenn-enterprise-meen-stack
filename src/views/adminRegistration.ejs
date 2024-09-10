@@ -6,7 +6,7 @@
     <h3>Create a new admin account</h3>
     <p>It's quick and easy</p>
 </div>
-<form action="" method="post">
+<form action="/admin/register" method="post">
     <div class="name first">
         <input type="text" id="first-name" placeholder="First name" name="first-name">
         <input type="text" id="last-name" placeholder="Last name" name="last-name">
@@ -14,9 +14,15 @@
 
 
     <div class="credentials"><input type="text" id="email" placeholder="Email" name="email"></div>
-    
-    <div class="credentials"><input type="password" id="password" placeholder="New password" name="password"></div>
 
+    <div class="credentials"><input type="password" id="password" placeholder="New password" name="password"></div>
+    <% if(errors && errors.length) {%>
+        <ul>
+        <% errors.forEach(function(error) { %>
+            <li><%= error %></li>
+        <% }); %>
+        </ul>
+    <%}%>
 
     <div><input type="submit" id="submit" name="submit" value="Register!"></div>
 </form>

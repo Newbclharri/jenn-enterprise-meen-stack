@@ -2,7 +2,7 @@
 const path = require('path');
 const express = require('express');
 const {getInviteForm, isApprovedEmail, emailIsAlreadyApproved, generateAdminInviteToken, sendAdminInvite} = require(path.join(__dirname, '..', 'controllers', 'adminInviteController.js'));
-const {verifyAdminInviteToken} = require(path.join(__dirname,'..','controllers','adminRegistrationController.js'));
+const {verifyAdminInviteToken, registerAdmin, adminRegistrationPostMiddlewares} = require(path.join(__dirname,'..','controllers','adminRegistrationController.js'));
 
 const router = express.Router();
 
@@ -20,8 +20,7 @@ router.post("/invite", isApprovedEmail, emailIsAlreadyApproved, generateAdminInv
 
 // admin registration routes
 
-router.get("/register", verifyAdminInviteToken, (req, res) =>{
-    res.send('<h1>Admin Registration Page</h1>');
-})
+router.get("/register", verifyAdminInviteToken, registerAdmin)
+router.post("/register", adminRegistrationPostMiddlewares)
 
 module.exports = router;
