@@ -6,6 +6,8 @@ require('dotenv').config();
 // Import json web token package
 const jwToken = require('jsonwebtoken');
 
+const { body, validationResult } = require('express-validator')
+
 
 //////////////// MIDDLEWARE ////////////////
 
@@ -31,12 +33,53 @@ exports.verifyAdminInviteToken = function (req, res, next) {
 
     try {
         const secretKey = process.env.SECRET_KEY;
-        const token = jwToken.verify(adminInviteToken, secretKey);
+        const payload = jwToken.verify(adminInviteToken, secretKey);
+        if (payload.role !== "Admin") {
+            return res.send('Unauthorized');
+        }
     } catch (err) {
         console.log(`Invalid token ${err.stack}`)
         return res.status(401).send('Invalid or expired token');
     }
 
-    next();
 
+    next();
 }
+
+////////////// GET REGISTRATION FORM ///////////
+exports.registerAdmin = function (req, res) {
+    return res.render('adminRegistration', {errors: [], stylesheet: '/assets/styles/adminRegistration.css' });
+}
+
+///////////// POST ADMIN REGISTRATION DATA /////////////
+
+// Middleware
+const verifyPassword = function(){
+    return body('password')
+        .isLength({ min: 8 }).withMessage('Password must be at least 8 characters long.')
+        .matches(/(?=.*[0-9])/).withMessage('Password must contain a number.')
+        .matches(/(?=.*[!@#$%^&*])/).withMessage('Password must contain a special character.')
+        .matches(/(?=.*[A-Z])/).withMessage('Password must contain a capital letter.')
+}
+
+const handlePasswordErrors = function (req, res, next) {
+
+    const errors = validationResult(req)
+
+    if(!errors.isEmpty()){
+        const errorMessages = errors.array().map(error => error.msg);
+        return res.render('adminRegistration', {
+            errors: errorMessages, 
+            userData: req.body,
+            stylesheet: '/assets/styles/adminRegistration.css'
+        });
+    }
+
+    next();
+}
+
+const createAdmin = function (req, res) {
+    res.send(`Admin ${req.body["first-name"]} created successfully`)
+}
+
+exports.adminRegistrationPostMiddlewares = [verifyPassword(), handlePasswordErrors, createAdmin]
