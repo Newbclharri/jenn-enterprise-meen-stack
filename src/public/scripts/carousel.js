@@ -1,5 +1,5 @@
 let currentSlide = 0;
-const transitionTime = 50000
+const transitionTime = 10000 //10 seconds
 
 function showSlide(index) {
     const slides = document.querySelectorAll('.carousel-image');
