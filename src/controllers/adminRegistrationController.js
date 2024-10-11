@@ -87,13 +87,13 @@ const createAdmin = async function (req, res) {
         email: req.body.email,
         username: req.body.email,
         password: req.body.password
-
     });
 
     try{
-
-    }catch(err){
-
+        const savedAdmin = await admin.save();
+        console.log(`Saved admin: ${savedAdmin}`)
+    }catch(error){
+        console.error(`Error saving admin: ${error}`)
     }
     res.send(`Admin ${req.body["first-name"]} created successfully`)
 }
