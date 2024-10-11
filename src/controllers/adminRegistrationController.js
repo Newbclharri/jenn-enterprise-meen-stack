@@ -2,6 +2,8 @@
 
 // Load .env file contents to process.env
 require('dotenv').config();
+const path = require('path');
+const Admin = require(path.join(__dirname, '..', 'models', 'Admin'));
 
 // Import json web token package
 const jwToken = require('jsonwebtoken');
@@ -78,7 +80,21 @@ const handlePasswordErrors = function (req, res, next) {
     next();
 }
 
-const createAdmin = function (req, res) {
+const createAdmin = async function (req, res) {
+    const admin = new Admin({
+        firstName: req.body["first-name"],
+        lastName: req.body["last-name"],
+        email: req.body.email,
+        username: req.body.email,
+        password: req.body.password
+
+    });
+
+    try{
+
+    }catch(err){
+
+    }
     res.send(`Admin ${req.body["first-name"]} created successfully`)
 }
 
