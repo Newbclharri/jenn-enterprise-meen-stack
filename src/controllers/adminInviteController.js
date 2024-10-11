@@ -27,7 +27,7 @@ exports.sendAdminInvite = function (req, res) {
     const api_key = process.env.SENDGRID_API_KEY;
 
     // Invitaion message
-    const link = `localhost:3000/admin/register?token=${adminInviteToken}`//`https://jennent.onrender.com/admin/register?token=${adminInviteToken}`;
+    const link = `https://jennent.onrender.com/admin/register?token=${adminInviteToken}`//`https://jennent.onrender.com/admin/register?token=${adminInviteToken}`;
     const body = req.body.message + "\n" + link;
     const subject = req.body.subject ?? "Jenn's Enterprise Admin Invitation"
 
